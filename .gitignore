@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
-.qwen
+*.qwen
 dist-ssr
 *.local
 

@@ -1,41 +1,80 @@
-import React from "react";
+import React, { useContext } from "react";
 import s from './header.module.css'
+import { AuthContext, AuthProvider } from "../../context/AuthContext";
+import { Link, useLocation } from "react-router-dom";
+
+interface Items {
+    id: number
+    title: string
+    href: string
+}
 
 function Header() {
-    
-    
+    const con = useContext(AuthContext)
+    const isAuth = con?.user
+    const location = useLocation()
+
+    const headername: Items[] = [
+        {id: 0, title: 'Find Jobs', href: '/'},
+        {id: 1, title: 'My Jobs', href: '/my-jobs'},
+        {id: 2, title: 'Message', href: '/message'},
+    ]
 
     return (
         <header className={s.header}>
             <div className={s.container}>
                 {/* Логотип / Название платформы */}
                 <div className={s.logo}>
-                    <svg className={s.logoIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#3B82F6" />
-                        <path d="M2 17L12 22L22 17" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M2 12L12 17L22 12" stroke="#93C5FD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <span className={s.logoText}>Freelance Platform</span>
+                    <Link to='/'>
+                        <svg className={s.logoIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#3B82F6" />
+                            <path d="M2 17L12 22L22 17" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 12L12 17L22 12" stroke="#93C5FD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <span className={s.logoText}>Freelance Platform</span>
+                    </Link>
                 </div>
 
                 {/* Навигация */}
                 <nav className={s.nav}>
-                    <a href="#" className={`${s.navLink} ${s.active}`}>Find Jobs</a>
-                    <a href="#" className={s.navLink}>My Jobs</a>
-                    <a href="#" className={s.navLink}>Messages</a>
+                    {headername.map((item) => (
+                        <Link
+                            key={item.id}
+                            to={item.href}
+                            className={`${s.navLink} ${location.pathname === item.href ? s.active : ''}`}
+                        >
+                            {item.title}
+                        </Link>
+                    ))}
                 </nav>
+                
                 {/* Профиль пользователя */}
-                <div className={s.userSection}>
-                    <img 
-                        className={s.avatar} 
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" 
-                        alt="Avatar" 
-                    />
-                    <span className={s.userName}>Client (Alex)</span>
-                    <svg className={s.dropdownArrow} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </div>
+                {isAuth ? (
+                    <div className={s.userSection}>
+                        <img 
+                            className={s.avatar} 
+                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" 
+                            alt="Avatar" 
+                        />
+                        <span className={s.userName}>{con.user?.role} ({con.user?.fullname})</span>
+                        <svg className={s.dropdownArrow} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </div>
+                ) : (
+                    <div className={s.authButtons}>
+                        <Link to='/login' className={s.loginBtn}>
+                            <span>Войти</span>
+                        </Link>
+                        <Link to='/register' className={s.registerBtn}>
+                            <span>Регистрация</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </Link>
+                    </div>
+                )
+                }
 
                 {/* Иконка уведомлений */}
                 <button className={s.notificationBtn}>

@@ -17,11 +17,25 @@ html, body {
 
 /* ===== Основной контейнер хедера ===== */
 .header {
-    background: #1E293B;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 16px;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
 }
 
 /* ===== Внутренний контейнер с отступами ===== */
@@ -29,8 +43,9 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 32px;
+    padding: 18px 36px;
     gap: 40px;
+    position: relative;
 }
 
 /* ===== Логотип ===== */
@@ -41,25 +56,53 @@ html, body {
     flex-shrink: 0;
 }
 
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.logo a:hover {
+    transform: translateY(-2px);
+}
+
 /* Иконка логотипа */
 .logoIcon {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.4));
+    transition: all 0.3s ease;
+}
+
+.logo a:hover .logoIcon {
+    filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.6));
+    transform: rotate(-5deg);
 }
 
 /* Текст логотипа */
 .logoText {
     color: #FFFFFF;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
+    background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
 }
 
 /* ===== Навигация ===== */
 .nav {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
 }
 
 /* Ссылка в навигации */
@@ -68,33 +111,52 @@ html, body {
     text-decoration: none;
     font-size: 15px;
     font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    overflow: hidden;
+}
+
+.navLink::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 /* Эффект при наведении */
 .navLink:hover {
     color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.navLink:hover::before {
+    opacity: 1;
 }
 
 /* Активная ссылка */
 .navLink.active {
-    color: #3B82F6;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(96, 165, 250, 0.15) 100%);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 /* Синяя линия под активной вкладкой */
 .navLink.active::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
-    height: 3px;
-    background: #3B82F6;
+    width: 40%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #3B82F6, transparent);
     border-radius: 2px;
 }
 
@@ -102,39 +164,58 @@ html, body {
 .userSection {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 8px;
-    transition: background 0.2s ease;
+    padding: 8px 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Эффект при наведении на секцию пользователя */
 .userSection:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Аватар пользователя */
 .avatar {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #3B82F6;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+.userSection:hover .avatar {
+    border-color: #60A5FA;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
+    transform: scale(1.05);
 }
 
 /* Имя пользователя */
 .userName {
     color: #E2E8F0;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 /* Стрелка выпадающего списка */
 .dropdownArrow {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     color: #94A3B8;
+    transition: all 0.3s ease;
+}
+
+.userSection:hover .dropdownArrow {
+    color: #3B82F6;
+    transform: translateY(2px);
 }
 
 /* ===== Кнопка уведомлений ===== */
@@ -142,50 +223,175 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin-left: 8px;
+    position: relative;
+}
+
+.notificationBtn::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: #EF4444;
+    border-radius: 50%;
+    border: 2px solid #1e293b;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
 }
 
 /* Иконка в кнопке уведомлений */
 .notificationBtn svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     color: #CBD5E1;
+    transition: all 0.3s ease;
 }
 
 /* Эффект при наведении на кнопку уведомлений */
 .notificationBtn:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .notificationBtn:hover svg {
+    color: #3B82F6;
+    transform: rotate(-15deg);
+}
+
+/* ===== Кнопки авторизации ===== */
+.authButtons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.loginBtn,
+.registerBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Кнопка входа */
+.loginBtn {
+    color: #E2E8F0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loginBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.loginBtn:hover::before {
+    left: 100%;
+}
+
+.loginBtn:hover {
     color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Кнопка регистрации */
+.registerBtn {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.registerBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.registerBtn:hover::before {
+    opacity: 1;
+}
+
+.registerBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+.registerBtn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.registerBtn:hover svg {
+    transform: translateX(4px);
 }
 
 /* ===== Адаптивность для средних экранов ===== */
 @media (max-width: 1024px) {
     .container {
-        padding: 14px 20px;
+        padding: 16px 24px;
         gap: 24px;
     }
 
     .navLink {
-        padding: 8px 12px;
+        padding: 8px 16px;
         font-size: 14px;
+    }
+
+    .logoText {
+        font-size: 18px;
     }
 }
 
 /* ===== Адаптивность для мобильных экранов ===== */
 @media (max-width: 768px) {
     .container {
-        padding: 12px 16px;
+        padding: 14px 16px;
         gap: 16px;
         flex-wrap: wrap;
     }
@@ -197,10 +403,11 @@ html, body {
         margin-top: 8px;
         padding-top: 12px;
         border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: transparent;
     }
 
     .navLink {
-        padding: 6px 10px;
+        padding: 8px 12px;
         font-size: 13px;
     }
 
@@ -210,5 +417,53 @@ html, body {
 
     .dropdownArrow {
         display: none;
+    }
+
+    .authButtons {
+        gap: 8px;
+    }
+
+    .loginBtn,
+    .registerBtn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .registerBtn span {
+        display: none;
+    }
+
+    .registerBtn svg {
+        margin: 0;
+    }
+
+    .logoText {
+        font-size: 16px;
+    }
+
+    .logoIcon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+    }
+
+    .logoText {
+        display: none;
+    }
+
+    .notificationBtn {
+        width: 40px;
+        height: 40px;
+        margin-left: 4px;
+    }
+
+    .notificationBtn svg {
+        width: 20px;
+        height: 20px;
     }
 }

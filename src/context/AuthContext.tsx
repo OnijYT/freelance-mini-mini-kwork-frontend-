@@ -22,10 +22,12 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
                 return 
             }
             try {
-                const res = await api.get<User>('/auth/me')
+                const res = await api.get<User>('/checkauth/me')
                 setUser(res.data)
             } catch (e) {
                 console.error(e)
+                localStorage.removeItem('token')
+                setUser(null)
             } finally{
                 setIsloading(false)
             }

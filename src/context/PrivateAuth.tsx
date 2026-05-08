@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 export const PrivateProvider = ({children}: {children: JSX.Element}) => {
     const Auth = useContext(AuthContext)
 
-    if(!Auth?.token) {
+    if(!Auth?.user) {
         return <Navigate to="/login" />
     }
 

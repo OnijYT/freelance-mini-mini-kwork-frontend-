@@ -1,0 +1,433 @@
+/* ===== Основной контейнер ===== */
+.pageContainer {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    min-height: 100vh;
+    align-items: start;
+}
+
+/* ===== Обертка формы ===== */
+.formWrapper {
+    background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+    border: 3px solid #3B82F6;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.8),
+        0 0 60px rgba(59, 130, 246, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.formWrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #3B82F6, #06B6D4, #8B5CF6, #3B82F6);
+    background-size: 200% 100%;
+    animation: gradientMove 3s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
+
+/* ===== Заголовок ===== */
+.header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.title {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+}
+
+.titleGradient {
+    background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 50%, #8B5CF6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.subtitle {
+    color: #CBD5E1;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* ===== Форма ===== */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.label svg {
+    width: 20px;
+    height: 20px;
+    color: #60A5FA;
+}
+
+/* ===== Поля ввода ===== */
+.input,
+.textarea {
+    width: 100%;
+    padding: 16px 20px;
+    background: #1e293b;
+    border: 2px solid #3B82F6;
+    border-radius: 16px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: 
+        0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: #94A3B8;
+}
+
+.input:focus,
+.textarea:focus {
+    border-color: #60A5FA;
+    background: #0f172a;
+    box-shadow: 
+        0 0 0 4px rgba(59, 130, 246, 0.3),
+        0 4px 20px rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 150px;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+/* ===== Кнопка отправки ===== */
+.submitBtn {
+    width: 100%;
+    padding: 18px 32px;
+    background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 50%, #8B5CF6 100%);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 16px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 12px;
+    box-shadow: 
+        0 8px 30px rgba(59, 130, 246, 0.6),
+        0 0 40px rgba(6, 182, 212, 0.4);
+}
+
+.submitBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.submitBtn:hover::before {
+    left: 100%;
+}
+
+.submitBtn svg {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.submitBtn:hover {
+    transform: translateY(-4px) scale(1.02);
+    background-position: 100% 50%;
+    box-shadow: 
+        0 12px 50px rgba(59, 130, 246, 0.8),
+        0 0 60px rgba(6, 182, 212, 0.6);
+}
+
+.submitBtn:hover svg:first-child {
+    transform: scale(1.2) rotate(360deg);
+}
+
+.submitBtn:hover svg:last-child {
+    transform: translateX(6px) rotate(5deg);
+}
+
+.submitBtn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* ===== Информационная секция ===== */
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 40px;
+    height: fit-content;
+}
+
+.infoCard {
+    background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+    border: 2px solid #3B82F6;
+    border-radius: 20px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.infoCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.infoCard:hover::before {
+    opacity: 1;
+}
+
+.infoCard:hover {
+    transform: translateY(-4px);
+    border-color: #60A5FA;
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+}
+
+.infoIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border: 2px solid #3B82F6;
+}
+
+.infoIcon svg {
+    width: 28px;
+    height: 28px;
+    color: #60A5FA;
+}
+
+.infoTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 16px 0;
+}
+
+.infoList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.infoList li {
+    color: #E2E8F0;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 24px;
+    position: relative;
+}
+
+.infoList li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #10B981;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* ===== Статистика ===== */
+.statsCard {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%);
+    border: 2px solid #3B82F6;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.statsTitle {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 16px 0;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.statItem {
+    background: #1e293b;
+    border: 2px solid #3B82F6;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.statItem:hover {
+    transform: translateY(-4px);
+    border-color: #60A5FA;
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+}
+
+.statNumber {
+    display: block;
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #3B82F6, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+
+.statLabel {
+    display: block;
+    font-size: 12px;
+    color: #CBD5E1;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 1200px) {
+    .pageContainer {
+        grid-template-columns: 1fr 350px;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .pageContainer {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .infoSection {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .pageContainer {
+        padding: 24px 16px;
+    }
+
+    .formWrapper {
+        padding: 28px 20px;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .input,
+    .textarea {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+
+    .submitBtn {
+        padding: 16px 24px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 28px;
+    }
+
+    .formWrapper {
+        padding: 24px 16px;
+    }
+
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .label {
+        font-size: 13px;
+    }
+}

@@ -17,7 +17,6 @@ function Jobcreate () {
     const auth = useContext(AuthContext)
     const navigate = useNavigate()
     
-    console.log("Auth Data:", auth)
 
     if (!auth?.user) {
         return <p>Загрузка или нужно войти...</p>
@@ -29,7 +28,6 @@ function Jobcreate () {
     }
 
     const onSubmit = async (data: CreateJob) => {
-        console.log("Отправляем данные:", data);
         try {
             await api.post('/jobs/create', data)
 

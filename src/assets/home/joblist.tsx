@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import s from './joblist.module.css'
 import { api } from '../../api';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 export interface Job {
     id: number;
@@ -13,6 +15,8 @@ export interface Job {
 
 function Joblist() {
     const [jobs, setJob] = useState<Job[]>([])
+    const navigate = useNavigate()
+    const auth = useContext(AuthContext)
 
     useEffect(() => {
         api.get<Job[]>('/jobs/')
@@ -89,7 +93,15 @@ function Joblist() {
                         </div>
                         <h3 className={s.dashboardTitle}>Post a Job</h3>
                         <p className={s.dashboardText}>Create a new job posting and find the perfect freelancer</p>
-                        <button className={s.dashboardBtn}>
+                        <button className={s.dashboardBtn} onClick={() => {
+                            if(!auth?.user) {
+                                return alert('Авторизуйтесь')
+                            }
+                            if(auth?.user?.role !== 'client'){
+                                return alert('Вы не клиент')
+                            }
+                            navigate('/create-job')
+                        }}>
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z" fill="currentColor"/>
                             </svg>
@@ -156,7 +168,7 @@ function Joblist() {
                                     </svg>
                                 </div>
                                 <div className={s.statBoxContent}>
-                                    <span className={s.statBoxNumber}>24</span>
+                                    <span className={s.statBoxNumber}>{jobs.length}</span>
                                     <span className={s.statBoxLabel}>Total Jobs</span>
                                 </div>
                             </div>

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import s from './jobcreate.module.css'
-import { api } from '../../api'
+import { api } from '../../../api'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import { AuthContext } from '../../context/AuthContext'
+import { AuthContext } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 interface CreateJob {

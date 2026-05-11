@@ -1,16 +1,20 @@
 import { useContext, useEffect, useState } from 'react';
 import s from './joblist.module.css'
-import { api } from '../../api';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import { api } from '../../../api';
+import { useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthContext';
 
 export interface Job {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    status: 'open' | 'in_progress' | 'completed';
-    clientId: number;
+    id: number
+    title: string
+    description: string
+    price: number
+    status: 'open' | 'in_progress' | 'completed'
+    clientId: number
+    User?: {
+        fullname: string
+        email: string
+    }
 }
 
 function Joblist() {
@@ -68,13 +72,15 @@ function Joblist() {
                                     </div>
                                     <div className={s.price}>${job.price.toLocaleString()}</div>
                                 </div>
-
-                                <button className={s.applyBtn}>
-                                    Apply Now
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                </button>
+                                <Link to={`/jobs/${job.id}`}>
+                                    <button className={s.applyBtn}>
+                                        Apply Now
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </Link>
+                                
                             </div>
                         );
                     })}

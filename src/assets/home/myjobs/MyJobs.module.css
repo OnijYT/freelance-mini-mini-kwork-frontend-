@@ -1,0 +1,766 @@
+/* ===== Основной контейнер страницы ===== */
+.pageContainer {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    min-height: 100vh;
+    align-items: start;
+}
+
+/* ===== ЛЕВАЯ СЕКЦИЯ - Список заданий ===== */
+.leftSection {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.header {
+    margin-bottom: 8px;
+}
+
+.title {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+.titleGradient {
+    background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 50%, #8B5CF6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.subtitle {
+    color: #94A3B8;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* ===== Список заданий ===== */
+.jobsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Кастомный скроллбар */
+.jobsList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.jobsList::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.jobsList::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #3B82F6, #06B6D4);
+    border-radius: 10px;
+}
+
+.jobsList::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #2563EB, #0891B2);
+}
+
+/* ===== Карточка задания ===== */
+.jobCard {
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.95) 0%, rgba(30, 41, 59, 0.98) 100%);
+    border: 2px solid rgba(59, 130, 246, 0.4);
+    border-radius: 24px;
+    padding: 28px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.jobCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3B82F6, #06B6D4, #8B5CF6, #3B82F6);
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: gradientMove 3s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
+
+.jobCard:hover::before {
+    opacity: 1;
+}
+
+.jobCard:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow:
+        0 20px 60px rgba(59, 130, 246, 0.25),
+        0 0 40px rgba(6, 182, 212, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ===== Заголовок карточки ===== */
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.statusBadge:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.jobId {
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    background: rgba(59, 130, 246, 0.3);
+    padding: 6px 14px;
+    border-radius: 12px;
+    border: 2px solid rgba(59, 130, 246, 0.6);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* ===== Заголовок задания ===== */
+.jobTitle {
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 14px 0;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.jobCard:hover .jobTitle {
+    color: #60A5FA;
+    transform: translateX(4px);
+}
+
+/* ===== Описание ===== */
+.jobDescription {
+    color: #E2E8F0;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 20px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Футер карточки ===== */
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.clientInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #E2E8F0;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(59, 130, 246, 0.2);
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 2px solid rgba(59, 130, 246, 0.4);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.clientInfo:hover {
+    background: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.clientInfo svg {
+    width: 20px;
+    height: 20px;
+    color: #FFFFFF;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.price {
+    font-size: 28px;
+    font-weight: 900;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #10B981 0%, #06B6D4 50%, #3B82F6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: priceGlow 4s ease-in-out infinite;
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.5));
+    letter-spacing: -0.5px;
+}
+
+@keyframes priceGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ===== Кнопки действий ===== */
+.cardActions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.editBtn,
+.deleteBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 2px solid;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.editBtn {
+    color: #3B82F6;
+    border-color: #3B82F6;
+}
+
+.editBtn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.deleteBtn {
+    color: #EF4444;
+    border-color: #EF4444;
+}
+
+.deleteBtn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.editBtn svg,
+.deleteBtn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ===== Empty State ===== */
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.5) 0%, rgba(30, 41, 59, 0.5) 100%);
+    border: 2px dashed rgba(59, 130, 246, 0.3);
+    border-radius: 24px;
+    text-align: center;
+}
+
+.emptyIcon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+    color: #3B82F6;
+    opacity: 0.5;
+}
+
+.emptyIcon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.emptyTitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 12px 0;
+}
+
+.emptyText {
+    color: #94A3B8;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* ===== ПРАВАЯ СЕКЦИЯ - Dashboard ===== */
+.rightSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 40px;
+    height: fit-content;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboardCard {
+    background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+    border: 2px solid #3B82F6;
+    border-radius: 20px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dashboardCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dashboardCard:hover::before {
+    opacity: 1;
+}
+
+.dashboardCard:hover {
+    transform: translateY(-4px);
+    border-color: #60A5FA;
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+}
+
+.dashboardIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border: 2px solid #3B82F6;
+}
+
+.dashboardIcon svg {
+    width: 28px;
+    height: 28px;
+    color: #60A5FA;
+}
+
+.dashboardTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 16px 0;
+}
+
+.statItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.statItem:last-child {
+    border-bottom: none;
+}
+
+.statLabel {
+    color: #94A3B8;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.statValue {
+    color: #3B82F6;
+    font-size: 18px;
+    font-weight: 700;
+    background: rgba(59, 130, 246, 0.2);
+    padding: 4px 12px;
+    border-radius: 8px;
+}
+
+/* ===== Auth/Role Check Cards ===== */
+.authCard {
+    max-width: 600px;
+    margin: 4rem auto;
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.95) 0%, rgba(30, 41, 59, 0.98) 100%);
+    padding: 60px 40px;
+    border-radius: 24px;
+    border: 2px solid #3B82F6;
+    box-shadow: 
+        0 20px 60px rgba(59, 130, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.authIcon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 24px;
+    color: #3B82F6;
+    opacity: 0.8;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.authIcon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4));
+}
+
+.authTitle {
+    font-size: 32px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 16px 0;
+}
+
+.authText {
+    font-size: 16px;
+    color: #94A3B8;
+    margin: 0 0 32px 0;
+    line-height: 1.6;
+}
+
+.authBtn {
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
+    border: none;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+}
+
+.authBtn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(59, 130, 246, 0.6);
+}
+
+/* ===== Freelancer Card ===== */
+.freelancerCard {
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.95) 0%, rgba(30, 41, 59, 0.98) 100%);
+    border: 2px solid rgba(16, 185, 129, 0.4);
+    border-radius: 24px;
+    padding: 40px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: slideIn 0.4s ease-out;
+}
+
+.freelancerCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #10B981, #06B6D4, #3B82F6, #10B981);
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: gradientMove 3s linear infinite;
+}
+
+.freelancerCard:hover::before {
+    opacity: 1;
+}
+
+.freelancerCard:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow:
+        0 20px 60px rgba(16, 185, 129, 0.25),
+        0 0 40px rgba(6, 182, 212, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.freelancerContent {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.freelancerIcon {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid #10B981;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.freelancerIcon svg {
+    width: 56px;
+    height: 56px;
+    color: #10B981;
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.4));
+}
+
+.freelancerInfo {
+    flex: 1;
+}
+
+.freelancerTitle {
+    font-size: 28px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 12px 0;
+    background: linear-gradient(135deg, #10B981 0%, #06B6D4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.freelancerDesc {
+    font-size: 16px;
+    color: #E2E8F0;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+}
+
+.freelancerBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #10B981 0%, #06B6D4 100%);
+    border: none;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.freelancerBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.freelancerBtn:hover::before {
+    left: 100%;
+}
+
+.freelancerBtn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(16, 185, 129, 0.6);
+}
+
+.freelancerBtn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.freelancerBtn:hover svg {
+    transform: translateX(4px);
+}
+
+/* ===== Responsive for Freelancer Card ===== */
+@media (max-width: 768px) {
+    .freelancerContent {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .freelancerIcon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .freelancerIcon svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .freelancerTitle {
+        font-size: 22px;
+    }
+
+    .freelancerDesc {
+        font-size: 14px;
+    }
+
+    .freelancerBtn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ===== Loading State ===== */
+.loadingSpinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(59, 130, 246, 0.2);
+    border-top: 4px solid #3B82F6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 4rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 1200px) {
+    .pageContainer {
+        grid-template-columns: 1fr 350px;
+        gap: 24px;
+        padding: 32px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pageContainer {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px 16px;
+    }
+
+    .rightSection {
+        position: static;
+        top: auto;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+
+    .jobCard {
+        padding: 20px;
+    }
+
+    .cardActions {
+        flex-direction: column;
+    }
+
+    .editBtn,
+    .deleteBtn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .emptyState {
+        padding: 60px 30px;
+    }
+
+    .emptyIcon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .emptyTitle {
+        font-size: 20px;
+    }
+}

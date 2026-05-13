@@ -9,6 +9,7 @@ import Joblist from './assets/home/joblist/joblist'
 import Login from './assets/auth/login/Login'
 import Register from './assets/auth/register/register'
 import OneJob from './assets/home/onejob/OneJob'
+import MyJobs from './assets/home/myjobs/myjobsPage'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
               <Route path='/login' element={<Login />}/>
               <Route path='/register' element={<Register />}/>
               <Route path='/jobs/:id' element={<OneJob />} />
+              <Route path='/my-jobs' element={<MyJobs />} />
 
               <Route
                 path='/create-job'

@@ -11,6 +11,7 @@ export interface Job {
     price: number
     status: 'open' | 'in_progress' | 'completed'
     clientId: number
+    createdAt: Date
     User?: {
         fullname: string
         email: string

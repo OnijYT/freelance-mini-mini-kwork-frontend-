@@ -4,15 +4,22 @@ import { api } from '../../../api'
 import type { Job } from '../joblist/joblist'
 import { AuthContext } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useForm } from 'react-hook-form'
 
 
 function MyJobs () {
 
     const [job, setJob] = useState<Job[]>([])
     const [loading, setLoading] = useState(true)
+    const [editingid, setEditingid] = useState<number | null>(null)
+    const {register, handleSubmit, reset} = useForm<Job>()
 
     const auth = useContext(AuthContext)
     const navigate = useNavigate()
+
+    
+
 
     useEffect(() => {
         const getmyjobs = async () => {
@@ -22,12 +29,30 @@ function MyJobs () {
                 setJob(res.data)
             })
             .catch(err => {
+                if(axios.isAxiosError(err)){
+                    alert(err.response?.data?.message || 'ошибка')
+                }
                 console.error(err)
             })
             .finally(() => setLoading(false))
         }
         getmyjobs()
     }, [])
+
+    const handledeleteitem = async (itemId: number) => {
+        const backjob = [...job]
+        setJob(job.filter(item => item.id !== itemId))
+
+        try {
+            await api.delete(`/jobs/${itemId}`)
+        } catch (err) {
+            console.error(err)
+            setJob(backjob)
+            if(axios.isAxiosError(err)) {
+                return alert(err.response?.data?.message || 'Ошибка сервера')
+            }
+        }
+    }
 
     const getStatusBadge = (status: Job['status']) => {
         const statusConfig = {
@@ -190,7 +215,7 @@ function MyJobs () {
                                             </svg>
                                             Edit
                                         </button>
-                                        <button className={s.deleteBtn}>
+                                        <button className={s.deleteBtn} onClick={() => handledeleteitem(item.id)}>
                                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-9l-1 1H5v2h14V4z" fill="currentColor"/>
                                             </svg>
